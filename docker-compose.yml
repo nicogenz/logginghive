@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:18
+    container_name: logginghive_db
+    restart: always
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
