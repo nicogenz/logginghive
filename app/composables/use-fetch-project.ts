@@ -8,6 +8,6 @@ export function useFetchProjectKey(props: Props) {
 
 export function useFetchProject(props: Props) {
   return useFetch<ProjectApiDto>(`/api/v1/projects/${props.id}`, {
-    key: useFetchProjectKey(props),
+    key: useFetchProjectKey(props)
   })
 }

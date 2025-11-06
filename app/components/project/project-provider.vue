@@ -6,7 +6,13 @@ const { data: project } = await useFetchProject({ id: props.id, organizationId: 
 
 <template>
   <div>
-    <slot v-if="project" v-bind="project" />
-    <slot v-else name="error" />
+    <slot
+      v-if="project"
+      v-bind="project"
+    />
+    <slot
+      v-else
+      name="error"
+    />
   </div>
 </template>

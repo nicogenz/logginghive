@@ -19,7 +19,7 @@ export default defineSessionAuthenticatedEventHandler(async (event): Promise<Org
         some: { userId: event.context.session.userId }
       }
     },
-    include: { members: true, projects: true },
+    include: { members: true, projects: true }
   })
   if (!organizationModel) {
     throw useNotFoundError('Organization not found')

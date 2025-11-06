@@ -4,6 +4,6 @@ export function useFetchProjectsKey() {
 
 export function useFetchProjects() {
   return useFetch<ProjectApiDto[]>('/api/v1/projects', {
-    key: useFetchProjectsKey(),
+    key: useFetchProjectsKey()
   })
 }

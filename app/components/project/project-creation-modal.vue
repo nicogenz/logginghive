@@ -52,17 +52,17 @@ const { execute: createProject, pending: createProjectPending } = useFetch('/api
           />
         </UFormField>
         <UFormField
-            label="Organization"
-            name="organizationId"
-            required
+          label="Organization"
+          name="organizationId"
+          required
         >
           <USelect
-              v-model="state.organizationId"
-              :items="organizations"
-              value-key="id"
-              label-key="name"
-              class="w-full"
-              required
+            v-model="state.organizationId"
+            :items="organizations"
+            value-key="id"
+            label-key="name"
+            class="w-full"
+            required
           />
         </UFormField>
       </UForm>

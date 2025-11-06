@@ -27,14 +27,22 @@ const organizationName = organization.value.name
     <template #body>
       <UPage>
         <UPageHeader
-            :title="organizationName"
-            :ui="{ title: 'text-xl sm:text-xl font-medium' }"
+          :title="organizationName"
+          :ui="{ title: 'text-xl sm:text-xl font-medium' }"
         />
         <UPageBody>
           <UPageGrid>
-            <ProjectProvider v-for="project in organization!.projects" :key="project" :id="project" :organization-id="organizationId">
+            <ProjectProvider
+              v-for="projectId in organization!.projects"
+              :id="projectId"
+              :key="projectId"
+              :organization-id="organizationId"
+            >
               <template #default="project">
-                <UPageCard :title="project.name" :to="`/organizations/${organizationId}/projects/${project.id}`" />
+                <UPageCard
+                  :title="project.name"
+                  :to="`/organizations/${organizationId}/projects/${projectId}`"
+                />
               </template>
             </ProjectProvider>
           </UPageGrid>
