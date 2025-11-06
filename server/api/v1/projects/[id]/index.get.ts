@@ -12,12 +12,18 @@ export default defineSessionAuthenticatedEventHandler(async (event): Promise<Pro
   }
   const databaseService = getDatabaseService()
   const { id } = routerParamValidation.data
-  const projectModel = await databaseService.project.findUnique({ where: { id } })
+  const projectModel = await databaseService.project.findUnique({
+    where: {
+      id,
+      members: { every: { userId: event.context.session.userId } }
+    }
+  })
   if (!projectModel) {
     throw useNotFoundError('Project not found')
   }
   return {
     id: projectModel.id,
-    name: projectModel.name
+    name: projectModel.name,
+    organizationId: projectModel.organizationId
   }
 })
