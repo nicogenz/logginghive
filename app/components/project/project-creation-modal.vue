@@ -2,13 +2,16 @@
 const emit = defineEmits<{ close: [ProjectApiDto | null] }>()
 const { mapApiErrorsToFormErrors } = useFormValidation()
 
-const state = reactive({ name: '' })
+const { data: organizations } = await useFetchOrganizations()
+
+const state = reactive({ name: '', organizationId: '' })
 const form = ref()
 
 const { execute: createProject, pending: createProjectPending } = useFetch('/api/v1/projects', {
   method: 'POST',
   body: computed(() => ({
-    name: state.name
+    name: state.name,
+    organizationId: state.organizationId
   })),
   immediate: false,
   onResponse: async ({ response }) => {
@@ -44,6 +47,20 @@ const { execute: createProject, pending: createProjectPending } = useFetch('/api
           <UInput
             v-model="state.name"
             autofocus
+            class="w-full"
+            required
+          />
+        </UFormField>
+        <UFormField
+          label="Organization"
+          name="organizationId"
+          required
+        >
+          <USelect
+            v-model="state.organizationId"
+            :items="organizations"
+            value-key="id"
+            label-key="name"
             class="w-full"
             required
           />

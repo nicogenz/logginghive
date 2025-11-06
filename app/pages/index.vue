@@ -28,7 +28,11 @@ const openProjectCreationModal = async () => {
 <template>
   <UDashboardPanel>
     <template #header>
-      <UDashboardNavbar title="Dashboard" />
+      <UDashboardNavbar>
+        <template #left>
+          <UBreadcrumb :items="[{ label: 'Dashboard', to: '/' }]" />
+        </template>
+      </UDashboardNavbar>
     </template>
     <template #body>
       <div>
@@ -59,7 +63,7 @@ const openProjectCreationModal = async () => {
               v-for="project in projects"
               :key="project.id"
               :title="project.name"
-              :to="`/projects/${project.id}`"
+              :to="`/organizations/${project.organizationId}/projects/${project.id}`"
             />
           </UPageGrid>
         </UPageBody>

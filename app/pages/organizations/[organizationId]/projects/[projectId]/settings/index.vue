@@ -15,7 +15,7 @@ const openProjectDeletionModal = async () => {
       title: `Project "${props.project.name}" was successfully deleted`,
       color: 'success'
     })
-    await refreshNuxtData(useFetchProjectsKey())
+    await refreshNuxtData(useFetchProjectsKey({ organizationId: props.project.organizationId }))
     navigateTo('/', { replace: true })
   }
 }

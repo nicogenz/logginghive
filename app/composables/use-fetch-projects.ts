@@ -1,5 +1,5 @@
 export function useFetchProjectsKey() {
-  return 'projects'
+  return `projects`
 }
 
 export function useFetchProjects() {

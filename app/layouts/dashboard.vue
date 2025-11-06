@@ -40,12 +40,13 @@ const userMenuItems = computed(() => ([
   ]
 ]))
 
+const organizationId = computed(() => router.currentRoute.value.params.organizationId)
 const projectId = computed(() => router.currentRoute.value.params.projectId)
-const sidebarItems = computed(() => projectId.value
+const sidebarItems = computed(() => projectId.value && organizationId.value
   ? ([
-      { label: 'Home', icon: 'i-lucide-home', to: `/projects/${projectId.value}`, exact: true },
-      { label: 'Api Keys', icon: 'i-lucide-key-round', to: `/projects/${projectId.value}/api-keys` },
-      { label: 'Settings', icon: 'i-lucide-settings', to: `/projects/${projectId.value}/settings` }
+      { label: 'Home', icon: 'i-lucide-home', to: `/organizations/${organizationId.value}/projects/${projectId.value}`, exact: true },
+      { label: 'Api Keys', icon: 'i-lucide-key-round', to: `/organizations/${organizationId.value}/projects/${projectId.value}/api-keys` },
+      { label: 'Settings', icon: 'i-lucide-settings', to: `/organizations/${organizationId.value}/projects/${projectId.value}/settings` }
     ])
   : [])
 </script>
