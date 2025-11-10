@@ -4,31 +4,34 @@ import { getDatabaseService } from '~~/server/services/database.service'
 import { getLogLevelService } from '~~/server/services/log-level.service'
 
 const bodySchema = z.object({
-  projectId: z.uuidv7(),
   level: z.enum(LogLevelEnum),
   message: z.string().min(1),
-  timestamp: z.number().min(1),
+  timestamp: z.number().min(1).optional(),
   metadata: z.object({}).passthrough().optional()
 })
 
-export default defineApiKeyAuthenticatedEventHandler(async (event) => {
+export default defineApiKeyAuthenticatedEventHandler(async (event): Promise<LogEntryApiDto> => {
   const bodyValidationResult = await readValidatedBody(event, bodySchema.safeParse)
   if (!bodyValidationResult.success) {
     throw useValidationError(zodIssuesToValidationErrors(bodyValidationResult.error.issues))
   }
   const databaseService = getDatabaseService()
   const logLevelService = getLogLevelService()
-  const { projectId, level, message, timestamp, metadata } = bodyValidationResult.data
-  if (event.context.apiKey.projectId !== projectId) {
-    throw useNotFoundError('Project not found')
-  }
-  await databaseService.logEntry.create({
+  const { level, message, timestamp, metadata } = bodyValidationResult.data
+  const logEntryModel = await databaseService.logEntry.create({
     data: {
       message,
       level: logLevelService.convertToDbFormat(level),
-      timestamp: new Date(timestamp),
+      timestamp: timestamp ? new Date(timestamp) : new Date(),
       metadata: metadata ? metadata as object : undefined,
-      projectId
+      projectId: event.context.apiKey.projectId
     }
   })
+  return {
+    id: logEntryModel.id,
+    timestamp: logEntryModel.timestamp.toISOString(),
+    level: logLevelService.convertFromDbFormat(logEntryModel.level),
+    message: logEntryModel.message,
+    metadata: logEntryModel.metadata || null
+  }
 })

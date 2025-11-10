@@ -75,7 +75,7 @@ Once you have created an organization, project, and API key, you can send logs u
 ```bash
 curl -X POST http://localhost:3000/api/v1/log-entries \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: your-api-key-here" \
+  -H "Authorization: your-api-key-here" \
   -d '{
     "message": "This is a log message",
     "level": "INFO",
