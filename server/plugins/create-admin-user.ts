@@ -3,6 +3,9 @@ import { getPasswordService } from '~~/server/services/password.service'
 import { OrganizationMemberRole } from '@prisma/client'
 
 export default defineNitroPlugin(async () => {
+  if (import.meta.prerender) {
+    return
+  }
   console.log('Running create-admin-user plugin')
   const databaseService = getDatabaseService()
   const userModels = await databaseService.user.findMany()
