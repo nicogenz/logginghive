@@ -24,7 +24,7 @@ model Session {
   id        String   @id @default(uuid(7)) @db.Uuid
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
-  token     String   @unique @default(nanoid(32))
+  token     String   @unique @default(nanoid(56))
   expiresAt DateTime @map("expires_at") @db.Timestamptz()
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String   @map("user_id") @db.Uuid
@@ -104,7 +104,7 @@ model ApiKey {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
   name      String
-  token     String   @unique @default(nanoid(32))
+  token     String   @unique @default(nanoid(56))
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   projectId String   @map("project_id") @db.Uuid
 
