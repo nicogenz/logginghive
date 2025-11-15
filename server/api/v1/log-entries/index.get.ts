@@ -16,7 +16,8 @@ export default defineSessionAuthenticatedEventHandler(async (event): Promise<Log
   const { projectId } = queryValidationResult.data
   const logEntries = await databaseService.logEntry.findMany({
     where: { projectId },
-    orderBy: { timestamp: 'desc' }
+    orderBy: { timestamp: 'desc' },
+    take: 100
   })
   return logEntries.map((logEntry): LogEntryApiDto => ({
     id: logEntry.id,
